@@ -38,7 +38,7 @@ export function appendSavedCallLauncher(s:Shortcut){
 }
 export function appendSaveCallPrompt(s:Shortcut,endpoint:V,request:V){
  const {txt,get,load}=helpers(s);
- const menu=s.chooseFromMenu('Save this request for reuse? Saved calls are global and include the input values.',['Run without saving','Save this call']);
+ const menu=s.chooseFromMenu('Save this request for reuse? Saved requests include your input values. Other shortcuts on this device can access them.',['Run without saving','Save this call']);
  s.menuItem(menu,'Run without saving');s.menuItem(menu,'Save this call');load();
  const name=s.action(actions.ask,{WFInputType:'Text',WFAskActionPrompt:text('Name this saved call')});
  const existing=get(variable('Saved calls'),ref(name));const size=s.action(actions.count,{Input:ref(existing),WFCountType:'Characters'});

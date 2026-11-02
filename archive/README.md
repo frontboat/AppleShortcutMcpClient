@@ -1,5 +1,5 @@
 # Static generator example
 
-`static/` contains the earlier tools/list-to-shortcut generator and its instructions. It reads a saved schema during building and emits fixed tool branches.
+[The static generator](static/mcp-to-shortcut.mts) reads a saved `tools/list` response during building and emits fixed tool branches. See [its instructions](static/MCP-GENERATOR.txt) for usage.
 
-The current client interprets schemas at runtime. Its builder is in `scripts/`, helpers are in `src/`, and tests are in `tests/`. The static generator's regression tests are included in the main test suite.
+The [current client](../README.md) interprets schemas at runtime. See its [builder](../scripts/build.mts), [helpers](../src/), and [tests](../tests/). The static generator's regression tests are included in the main test suite.

@@ -53,7 +53,7 @@ function helpers(s:Shortcut){
  s.action(actions.appendvariable,{WFVariableName:'Text blocks',WFInput:ref(content)});
  s.endIf(isText);s.endRepeatEach(each);
  const joined=s.action(actions.text_combine,{text:variable('Text blocks'),WFTextSeparator:'New Lines'});
- const display=txt('PUBLICSURPLUS — TEXT RESULT\n\n',ref(joined));preview(ref(display));
+ const display=txt('PublicSurplus: text result\n\n',ref(joined));preview(ref(display));
  await s.write(decodeURIComponent(new URL(`${s.name}.shortcut`, outputDir).pathname));console.log(s.name,s.actions.length);
 }
 // Test 3: synthetic structured data shown independently of text content.

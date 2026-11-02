@@ -6,6 +6,8 @@ MCP Toolkit was made and tested for macOS. iPhone and iPad compatibility has not
 
 ## Build locally
 
+Run these commands from the repository root with Bun installed. Signing requires Apple's CLI and a Mac signed into iCloud.
+
 ```sh
 bun install --frozen-lockfile
 bun run build
@@ -13,6 +15,6 @@ shortcuts sign --mode anyone --input 'dist/MCP Toolkit.shortcut' --output 'relea
 open 'releases/MCP Toolkit.shortcut'
 ```
 
-The workflow name and import filename are both MCP Toolkit. The release file is allowlisted for Git; other generated shortcut files remain ignored. Signing requires Apple's CLI and a Mac signed into iCloud.
+The workflow name and import filename are both MCP Toolkit. The release file is allowlisted for Git; other generated shortcut files remain ignored.
 
 After changing the builder, test the affected flows in Shortcuts before distributing a replacement release.

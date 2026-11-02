@@ -142,4 +142,4 @@ function numberPrompt(){
  const d=s.action(actions.dictionary,{WFItems:encoded});const json=txt(ref(d));const peeled=replace(ref(json),'^\\s*\\{\\s*"value"\\s*:\\s*([\\s\\S]*)\\}\\s*$','$1');set('JSON Value',ref(peeled));
 }
 await mkdir(new URL('../dist/', import.meta.url), { recursive: true });
-await s.write(decodeURIComponent(new URL('../dist/MCP Toolkit.shortcut', import.meta.url).pathname));console.log(`Built universal runtime client: ${s.actions.length} actions`);
+await s.write(decodeURIComponent(new URL('../dist/MCP Toolkit.shortcut', import.meta.url).pathname));console.log(`Built MCP Toolkit: ${s.actions.length} actions`);

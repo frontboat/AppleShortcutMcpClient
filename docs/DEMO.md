@@ -1,59 +1,43 @@
 # MCP Toolkit demo script
 
-Target: a roughly two-minute recording for the case study. This is a shot list and narration draft; no recording is included yet. Show actual native execution and keep any shortened waits apparent.
+Plan for a two-minute macOS recording. No video is included yet.
 
-## Opening disclosure
+## Prepare
 
-Narration: “I created Shortcutkit. I used it with a coding agent to build this working MCP client in Apple Shortcuts. Here is what the prototype does today.”
+Save two small read-only requests for the batch segment. Use demo names and arguments. Hide unrelated shortcuts, notifications, account names, and stored personal data. Show fresh results; do not script prices, counts, or titles. Make shortened waits and retries apparent.
 
-On screen: MCP Toolkit in the macOS Shortcuts app. Include the source and package links in the accompanying post, rather than inside the input flow.
+## Opening
 
-## 1. A URL becomes a tool menu
+Show MCP Toolkit in Shortcuts.
 
-Choose New tool call, then Add URL. Paste:
+Narration: “I created Shortcutkit and used it with a coding agent to build this MCP client in Apple Shortcuts.”
 
-```text
-https://publicsurplus-production.up.railway.app/mcp
-```
+## 1. Discover tools
 
-Use a demo name such as “Auction Demo.” Show the tools returned by the live request. If the endpoint is already saved, explicitly choose Refresh tools rather than presenting cached data as a new discovery.
+Choose New tool call, then Add URL. Paste `https://publicsurplus-production.up.railway.app/mcp` and name the server “Auction Demo.” Choose Refresh tools if cached definitions exist. Show the returned menu.
 
-Narration: “The shortcut fetches this server's tools and input schemas at runtime. These tool names are not built into its source.”
+Narration: “The shortcut fetches this server's tools and input schemas when it runs.”
 
-## 2. Fill in a small request
+## 2. Make a request
 
-Choose `search_lots` and enter `3` for `limit`. Show the schema-provided description and input prompts. Save the request as “Auction demo,” then briefly show the actual endpoint, tool, and arguments in the review before submitting.
+Choose `search_lots`, select `limit`, and enter `3`. Show the prompts, save as “Auction demo,” then review the endpoint and arguments before sending.
 
-Narration: “The schema drives the prompts. Basic fields have native inputs; complex schemas still need JSON entry.”
+Narration: “Basic fields use native prompts. Complex inputs still need JSON entry.”
 
-## 3. Inspect a response
+## 3. Inspect the response
 
-Choose Structured data or Readable text. Show what is actually returned, even if there are no matches. Some servers put JSON inside text blocks; do not present that as polished record formatting.
+Choose Readable text or Structured data. Show the returned result, including empty results or JSON embedded in text.
 
-Narration: “There are text, structured-data, and raw-response views. Structured data still needs better formatting.”
+Narration: “You can view text, structured data, or the raw response. Structured data still needs formatting.”
 
-For a plain-text example, optionally use PublicSurplus `search_lots` with `limit: 3`:
+## 4. Run saved calls
 
-```text
-https://publicsurplus-production.up.railway.app/mcp
-```
+Choose Run multiple saved calls and select the two demo requests. Show the review order and both sections of the combined output.
 
-Its Readable text view is a clearer demonstration of text extraction. A second server also demonstrates that the tool menu changes with the endpoint.
-
-## 4. Reuse and combine saved calls
-
-Before recording this segment, save a second small read-only request and name it clearly. Select Run multiple saved calls and choose the two demo requests. Show the review order, submit, and scroll the combined output far enough to reveal both labeled sections.
-
-Narration: “Saved requests retain their endpoint and arguments in global storage. A batch runs them sequentially and combines the results. These are independent calls; one result is not fed into the next.”
+Narration: “Saved calls retain their arguments. A batch runs them in sequence; results do not feed into later calls.”
 
 ## Closing
 
-Narration: “This is a tested prototype for stateless HTTP MCP servers returning JSON. The repo includes the builder, regression tests, small experiments, and the native-runtime lessons we found.”
+Narration: “This prototype supports stateless HTTP MCP servers returning JSON. I tested it on macOS; iPhone and iPad compatibility is unverified.”
 
-Link the case study, [shared macOS shortcut](https://www.icloud.com/shortcuts/a38cb4a66ec74df7bc272b809ad60c6f), and Shortcutkit source/packages in the post. State that the shortcut was made for macOS; iPhone and iPad compatibility has not been verified. Avoid claiming compatibility with every MCP server or full protocol compliance.
-
-## Recording preparation
-
-Use only demo server names and arguments. Hide unrelated shortcuts, notifications, account names, and existing saved-call lists. Do not capture global storage containing personal queries or credentials. Use small read-only requests so the recording does not depend on a long result set or external changes.
-
-The server's listings and counts change. Record fresh results and avoid scripting exact prices, counts, or titles. If a request fails during recording, capture the retry honestly or explain the cut.
+Include the [case study](../CASE-STUDY.md), [shortcut](https://www.icloud.com/shortcuts/a38cb4a66ec74df7bc272b809ad60c6f), and Shortcutkit source/package links in the accompanying post.
