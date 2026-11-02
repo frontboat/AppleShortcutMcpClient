@@ -1,0 +1,50 @@
+EARLIER STATIC GENERATOR
+The current runtime-discovery client is documented in README.md.
+This file describes mcp-to-shortcut.mts, which generates menus from a saved schema snapshot.
+
+MCP Tools to Shortcut
+
+Generate a menu-driven Apple shortcut from a tools/list JSON response:
+
+  bun run generate:mcp tools.json https://example.com/mcp "Use Example"
+
+Accepts the full JSON-RPC response, its {tools: [...]} result, or a tool array.
+The endpoint is configured separately because tools/list does not contain it.
+Generates an unsigned .shortcut and a .report.json listing tools and JSON-input fields.
+
+Sign on a Mac signed into iCloud:
+  shortcuts sign --mode anyone --input "Use Example.shortcut" --output "Use Example-signed.shortcut"
+
+Example:
+  bun run generate:static tools.json https://example.com/mcp "Use Example"
+
+Run the shortcut, select a tool, and fill in sequential prompts. Optional fields
+are chosen together in a multiple-selection list. Only selected fields are prompted;
+unselected keys are omitted so the server chooses its default. Choose No optional
+fields alone to skip all optional inputs.
+Nested objects have prompts for their fields. Enum and boolean fields use menus.
+Strings are escaped by Apple's dictionary serializer. Numbers retain JSON types.
+Arrays of enum choices use multiple-selection lists (for example sale and lease).
+Other arrays and complex unions/maps take JSON input; their schema appears in the prompt.
+Review the full request, then choose Done to send or Cancel to stop.
+The full response is previewed and returned unchanged as text.
+
+Transport scope: HTTP POST to stateless MCP endpoints accepting tools/call directly
+and returning JSON. This version does not implement initialization/session negotiation,
+OAuth, SSE event parsing, stdio transport, automatic pagination, binary-media rendering,
+or full JSON Schema validation. Bounds and descriptions are shown as input guidance;
+servers enforce schema constraints. Malformed JSON stops before sending, although
+Apple's dictionary parser also accepts some non-JSON formats. Tool errors remain visible
+in the full raw response. Configure authenticated endpoints separately in Get Contents
+of URL headers; do not distribute shortcuts containing secret headers.
+
+The generated tool menu is a snapshot. Regenerate after a server changes its schema.
+Large tool catalogs generate large shortcuts.
+
+Validation:
+  bun run test:mcp
+  bun x tsc --noEmit --module nodenext --target es2022 --skipLibCheck --allowImportingTsExtensions mcp-to-shortcut.mts mcp-to-shortcut.test.ts
+
+Generation tests and signing pass. The generated form/request serialization still
+needs end-to-end verification in Apple's runtime. Start with find_listings_by_text,
+enter example, and skip the optional limit and offset fields.

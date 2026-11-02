@@ -1,0 +1,30 @@
+import { actions, coerce, ref, text, variable, type Shortcut, type Attachment, type VariableType } from 'shortcutkit';
+type V=Attachment<Exclude<VariableType,'Ask'>>;
+export const REGISTRY_KEY='mcp.servers.v1';
+export const CACHE_PREFIX='mcp.tools.raw.2026-07-28.v1|';
+export function appendServerPicker(s:Shortcut){
+ const txt=(...p:Parameters<typeof text>)=>s.action(actions.gettext,{WFTextActionText:text(...p)});
+ const set=(n:string,v:V)=>s.action(actions.setvariable,{WFVariableName:n,WFInput:v});
+ const stored=s.action(actions.getstoredcontent,{WFStoredContentKey:text(REGISTRY_KEY),WFStoredContentGlobalValue:true});
+ const empty=s.action(actions.dictionary,{WFItems:{}});set('Server registry',ref(empty));
+ const size=s.action(actions.count,{Input:ref(stored),WFCountType:'Characters'});
+ const exists=s.if(ref(size),'greater_than',0);
+ const parsed=s.action(actions.detect_dictionary,{WFInput:ref(stored)});set('Server registry',ref(parsed));s.endIf(exists);
+ const keys=s.action(actions.getvalueforkey,{WFInput:variable('Server registry'),WFGetDictionaryValueType:'All Keys'});
+ set('Server choices',ref(txt('Add URL…')));
+ const savedNames=s.repeatEach(ref(keys));
+ s.action(actions.appendvariable,{WFVariableName:'Server choices',WFInput:variable('Repeat Item')});
+ s.endRepeatEach(savedNames);
+ const chosen=s.action(actions.choosefromlist,{WFInput:variable('Server choices'),WFChooseFromListActionPrompt:text('Choose a saved MCP server or add a URL')});
+ const add=s.if(coerce(chosen,'WFStringContentItem'),'is','Add URL…');
+ const url=s.action(actions.ask,{WFInputType:'Text',WFAskActionPrompt:text('Paste the MCP endpoint URL')});
+ const name=s.action(actions.ask,{WFInputType:'Text',WFAskActionPrompt:text('Save this server as (use a unique name; an existing name will be replaced)')});
+ set('MCP endpoint',ref(url));
+ const updated=s.action(actions.setvalueforkey,{WFDictionary:variable('Server registry'),WFDictionaryKey:text(ref(name)),WFDictionaryValue:text(ref(url))});
+ const json=txt(ref(updated));
+ s.action(actions.setstoredcontent,{WFInput:text(ref(json)),WFStoredContentKey:text(REGISTRY_KEY),WFStoredContentGlobalValue:true});
+ s.otherwise(add);
+ const saved=s.action(actions.getvalueforkey,{WFInput:variable('Server registry'),WFGetDictionaryValueType:'Value',WFDictionaryKey:text(ref(chosen))});set('MCP endpoint',ref(saved));
+ s.endIf(add);
+ return s.action(actions.getvariable,{WFVariable:variable('MCP endpoint')});
+}

@@ -1,0 +1,37 @@
+# Dependencies and generated output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+*.shortcut
+!/releases/MCP Toolkit.shortcut
+*.shortcut.report.json
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
+# Local caches, exports, and machine files
+.local/
+.cache/
+private/
+exports/
+.DS_Store
+.AppleDouble
+._*
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Local agent configuration
+.agents/
+skills-lock.json
